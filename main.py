@@ -1,4 +1,5 @@
 #!/usr/bin/python
+# -*- coding: utf-8 -*-
 #assume pythong 2.7
 import os,fnmatch,hashlib,base64,subprocess
 from shutil import copyfile
