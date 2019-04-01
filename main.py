@@ -54,8 +54,8 @@ b64NewLogo = "data:image/png;base64," + base64.b64encode(open(newlogo,"rb").read
 b64NewBackground = "data:image/png;base64," + base64.b64encode(open(newBackground,"rb").read())
 word_dict = dict()
 word_dict["Welcome to the 3CX Web Client"] = "SMS,Chat,Video Service Login"
-word_dict["\"http://www.3cx.com\""]="\"http://biukop.com.au/\""
-word_dict["\"https://www.3cx.com\""]="\"https://biukop.com.au/\""
+word_dict["http://www.3cx.com"]="http://biukop.com.au"
+word_dict["https://www.3cx.com"]="https://biukop.com.au"
 word_dict["欢迎访问3CX控制面板"]="欢迎访问控制台"
 word_dict["Welcome to the 3CX Management Console"]="Authorized user Login"
 #step 1. overwrite logo pictures
@@ -75,11 +75,10 @@ for root,dirs,files in os.walk(w3root):
         if b64OldLogo in open(fname).read():
             print "logo :", fname
             replaceTxt(fname, b64OldLogo, b64NewLogo)
-            subprocess.call(["gzip","-fk",fname]); 
 
         if b64OldBackground in open(fname).read():
             print "bg  :",fname 
-            replaceTxt(fname, b64OldBackground, b64NewBackground)
+
+        #compress js to gz and preserve js file
+        if fname.endswith('.js') :
             subprocess.call(["gzip","-fk",fname]); 
-
-
