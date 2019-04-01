@@ -54,6 +54,8 @@ b64NewBackground = "data:image/png;base64," + base64.b64encode(open(newBackgroun
 word_dict = dict()
 word_dict["Welcome to the 3CX Web Client"] = "SMS,Chat,Video Service Login"
 word_dict["\"http://www.3cx.com\""]="\"http://biukop.com.au/\""
+word_dict["\"https://www.3cx.com\""]="\"https://biukop.com.au/\""
+word_dict["欢迎访问3CX控制面板"]="欢迎访问控制台"
 word_dict["Welcome to the 3CX Management Console"]="Authorized user Login"
 #step 1. overwrite logo pictures
 installBkLogo(w3root, newlogo)
