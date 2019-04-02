@@ -24,7 +24,9 @@ word_dict ={
     "https://www.3cx.com":"https://biukop.com.au",
     "欢迎访问3CX控制面板":"欢迎访问控制台",
     "Welcome to the 3CX Management Console":"Authorized user Login",
-    "3CX Phone System Management Console": "Biukop Phone Console"
+    "3CX Phone System Management Console": "Biukop Phone Console",
+    "3CX Phone System Webclient" : "Biukop Conference WebClient",
+    "3CX Webclient" : "Biukop Webclient"
 }
 
 #fav.ico old and new
