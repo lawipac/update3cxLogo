@@ -65,7 +65,7 @@ def find(pattern, path):
 
 def loadLogo(fname):
     with open (fname, 'r') as f: 
-        s = f.read().replace('\n','')
+        s = f.read()
         return s
 
 def installBkLogo(path,newlogo):
@@ -105,13 +105,20 @@ os.chdir(curdir)
 #
 # Convert to base 64
 #
-b64OldLogo = "data:image/png;base64," + base64.b64encode(open(oldlogo,"rb").read())
-b64OldBackground = "data:image/png;base64," + base64.b64encode(open(oldBackground,"rb").read())
-b64NewLogo = "data:image/png;base64," + base64.b64encode(open(newlogo,"rb").read())
-b64NewBackground = "data:image/png;base64," + base64.b64encode(open(newBackground,"rb").read())
+b64OldLogo = base64.b64encode(loadLogo(oldlogo))
+b64OldBackground = base64.b64encode(loadLogo(oldBackground))
+b64NewLogo = base64.b64encode(loadLogo(newlogo))
+b64NewBackground =base64.b64encode(loadLogo(newBackground))
 
-
-
+#txtBg = loadLogo("bg.txt")
+#if b64OldBackground != txtBg:
+#    print "suck it is not equal"
+#    with open("oldbg.txt", "w") as f:
+#        f.write(b64OldBackground)
+#    with open("txtbg.txt", "w") as f:
+#        f.write(txtBg)
+#    exit()
+#
 #step 1. overwrite logo pictures
 installBkLogo(w3root, newlogo)
 
@@ -119,23 +126,32 @@ installBkLogo(w3root, newlogo)
 #step 2. overwrite logo src base64
 for root,dirs,files in os.walk(w3root):
     for f in files:       
+        changed = False
         fname = os.path.join(root,f)
+        fcontent = open(fname,"rb").read()
+
 #       step3 replace 3cx text to biukop welcome,before gzip
         for key in word_dict:
-            if key in open(fname).read():
+            if key in fcontent:
                 print key,"->",word_dict[key]," in ", fname
-                replaceTxt(fname,key,word_dict[key])
+                fcontent.replace(key,word_dict[key])
+                changed = True
 
-        if b64OldLogo in open(fname).read():
+        if b64OldLogo in fcontent:
             print "logo :", fname
-            replaceTxt(fname, b64OldLogo, b64NewLogo)
+            fcontent.replaceTxt(b64OldLogo, b64NewLogo)
+            changed = True
 
         if b64OldBackground in open(fname).read():
             print "bg  :",fname 
-            replaceTxt(fname, b64OldBackground, b64NewBackground)
+            fcontent.replace(b64OldBackground, b64NewBackground)
+            changed = True
+        if changed :
+            with open(fname, "wb") as f:
+                f.write(fcontent)
 
         #compress js to gz and preserve js file
-        if fname.endswith('.js') :
+        if fname.endswith('.js') or fname.endswith('.css') :
             subprocess.call(["gzip","-fk",fname]); 
 
         if f == oldico:
