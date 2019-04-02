@@ -3,13 +3,48 @@
 #assume pythong 2.7
 import os,fnmatch,hashlib,base64,subprocess
 from shutil import copyfile
+#
 # Global Variable  Config
+#
+
+#where 3cx html files are located
 w3root = "/var/lib/3cxpbx/Data/Http/wwwroot/" #for real action
 w3root = "./wwwroot/"  #for local test
+
+#old new logo and background image in png format
 newlogo = "./newlogo.png"
 newBackground = "./newbackground.png"
 oldlogo = "./3cxlogo.png"
 oldBackground = "./3cxbackground.png"
+
+#strings needs to be changed within the html
+word_dict ={
+    "Welcome to the 3CX Web Client" : "SMS,Chat,Video Service Login"
+    "http://www.3cx.com":"http://biukop.com.au"
+    "https://www.3cx.com":"https://biukop.com.au"
+    "欢迎访问3CX控制面板":"欢迎访问控制台"
+    "Welcome to the 3CX Management Console":"Authorized user Login"
+    "3CX Phone System Management Console": "Biukop Phone Console"
+}
+
+#fav.ico old and new
+oldico = "./biukop-letterB.ico"
+newico = os.path.join(w3root . "favicon.ico")
+#
+#
+#
+#
+#
+#
+#
+#
+# programs below should not be edited unless you know the logic
+#
+#
+#
+#
+#
+#
 ########  functions ############
 def md5(fname):
     hash_md5 = hashlib.md5()
@@ -52,12 +87,9 @@ b64OldLogo = "data:image/png;base64," + base64.b64encode(open(oldlogo,"rb").read
 b64OldBackground = "data:image/png;base64," + base64.b64encode(open(oldBackground,"rb").read())
 b64NewLogo = "data:image/png;base64," + base64.b64encode(open(newlogo,"rb").read())
 b64NewBackground = "data:image/png;base64," + base64.b64encode(open(newBackground,"rb").read())
-word_dict = dict()
-word_dict["Welcome to the 3CX Web Client"] = "SMS,Chat,Video Service Login"
-word_dict["http://www.3cx.com"]="http://biukop.com.au"
-word_dict["https://www.3cx.com"]="https://biukop.com.au"
-word_dict["欢迎访问3CX控制面板"]="欢迎访问控制台"
-word_dict["Welcome to the 3CX Management Console"]="Authorized user Login"
+
+
+
 #step 1. overwrite logo pictures
 installBkLogo(w3root, newlogo)
 
@@ -82,3 +114,6 @@ for root,dirs,files in os.walk(w3root):
         #compress js to gz and preserve js file
         if fname.endswith('.js') :
             subprocess.call(["gzip","-fk",fname]); 
+
+#step4 change fav.ico
+copyfile(oldico,newico)
