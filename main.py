@@ -139,7 +139,7 @@ for root,dirs,files in os.walk(w3root):
 
         if b64OldLogo in fcontent:
             print "logo :", fname
-            fcontent.replaceTxt(b64OldLogo, b64NewLogo)
+            fcontent.replace(b64OldLogo, b64NewLogo)
             changed = True
 
         if b64OldBackground in open(fname).read():
