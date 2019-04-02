@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 #assume pythong 2.7
-import os,fnmatch,hashlib,base64,subprocess
+import os,fnmatch,hashlib,base64,subprocess,argparse
 from shutil import copyfile
 #
 # Global Variable  Config
@@ -19,17 +19,17 @@ oldBackground = "./3cxbackground.png"
 
 #strings needs to be changed within the html
 word_dict ={
-    "Welcome to the 3CX Web Client" : "SMS,Chat,Video Service Login"
-    "http://www.3cx.com":"http://biukop.com.au"
-    "https://www.3cx.com":"https://biukop.com.au"
-    "欢迎访问3CX控制面板":"欢迎访问控制台"
-    "Welcome to the 3CX Management Console":"Authorized user Login"
+    "Welcome to the 3CX Web Client" : "SMS,Chat,Video Service Login",
+    "http://www.3cx.com":"http://biukop.com.au",
+    "https://www.3cx.com":"https://biukop.com.au",
+    "欢迎访问3CX控制面板":"欢迎访问控制台",
+    "Welcome to the 3CX Management Console":"Authorized user Login",
     "3CX Phone System Management Console": "Biukop Phone Console"
 }
 
 #fav.ico old and new
-oldico = "./biukop-letterB.ico"
-newico = os.path.join(w3root . "favicon.ico")
+newico = "./biukop-letterB.ico"
+oldico = "favicon.ico"
 #
 #
 #
@@ -72,14 +72,34 @@ def installBkLogo(path,newlogo):
         print newlogo , "->", f
         copyfile(newlogo, f)
 
+def changeFavIco(path, newIco):
+    files = find("favicon.ico", path)
+    for f in files:
+        print newico , "->", f
+        copyfile(newico,f)
+
 def replaceTxt(fname,old,new):
     with open(fname) as f:
         s = f.read().replace(old,new)
     with open(fname, "w") as f: 
         f.write(s)
-####### main logic ###############3
-if w3root == "./wwwroot/":
-    print "w3root is development root" , w3root 
+
+def getw3root():
+    global w3root
+    parser = argparse.ArgumentParser(description='Get customized w3root')
+    parser.add_argument('-w','--webroot3cx', nargs='?',dest='webroot3cx',help="specify webroot of 3cx, default /var/lib/3cxpbx/Data/Http/wwwroot/", action='store', required=False, const=str)
+    args = parser.parse_args()
+    if args.webroot3cx is not None :
+        w3root = args.webroot3cx
+####### main logic ###############
+getw3root()
+print "3cxwebroot is set to" , w3root
+if (not os.path.isdir(w3root)):
+    print "the directory does not exist"
+    exit()
+curdir = os.path.dirname(os.path.realpath(__file__))
+print "change to working directory", curdir
+os.chdir(curdir)
 #
 # Convert to base 64
 #
@@ -110,10 +130,16 @@ for root,dirs,files in os.walk(w3root):
 
         if b64OldBackground in open(fname).read():
             print "bg  :",fname 
+            replaceTxt(fname, b64OldBackground, b64NewBackground)
 
         #compress js to gz and preserve js file
         if fname.endswith('.js') :
             subprocess.call(["gzip","-fk",fname]); 
 
+        if f == oldico:
+            print newico, "->", fname
+            copyfile(newico,fname)
+
+
 #step4 change fav.ico
-copyfile(oldico,newico)
+
