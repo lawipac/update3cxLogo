@@ -134,17 +134,17 @@ for root,dirs,files in os.walk(w3root):
         for key in word_dict:
             if key in fcontent:
                 print key,"->",word_dict[key]," in ", fname
-                fcontent.replace(key,word_dict[key])
+                fcontent = fcontent.replace(key,word_dict[key])
                 changed = True
 
         if b64OldLogo in fcontent:
             print "logo :", fname
-            fcontent.replace(b64OldLogo, b64NewLogo)
+            fcontent = fcontent.replace(b64OldLogo, b64NewLogo)
             changed = True
 
         if b64OldBackground in open(fname).read():
             print "bg  :",fname 
-            fcontent.replace(b64OldBackground, b64NewBackground)
+            fcontent = fcontent.replace(b64OldBackground, b64NewBackground)
             changed = True
         if changed :
             with open(fname, "wb") as f:
