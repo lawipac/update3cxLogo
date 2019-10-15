@@ -1,9 +1,9 @@
 # update3cxLogo
 update 3cx log and text to Biukop related branding
 
-#usage
+# usage
 ./deploy.sh
 
-#caveats
+# caveats
 #hardcode to cc.biukop.com.au
 #
