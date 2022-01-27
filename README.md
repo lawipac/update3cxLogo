@@ -4,8 +4,15 @@ update 3cx log and text to Biukop related branding
 # usage on Development Machine
 ./deploy.sh
 
-#usage on Remote 3cx machine
-./localDeploy.sh
+It will copy files to remote ```/root/change3cxlogo/```, and then execute command through ssh
+
+# usage on Remote 3cx machine
+under ```/root/change3cxlogo/```  directory 
+
+Run following command
+``` # ./localDeploy.sh ```
+
+it's essentially the last step of remote running on development machine.
 
 # caveats
 #hardcode to cc.biukop.com.au
