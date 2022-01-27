@@ -35,7 +35,7 @@ newico = "./biukop-letterB.ico"
 oldico = "favicon.ico"
 
 # 3cx adopted svg log for version 18 and later
-newSvgLogo = "./newlog.svg"
+newSvgLogo = "./newlogo.svg"
 
 
 #
