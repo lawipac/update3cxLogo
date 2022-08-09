@@ -35,6 +35,7 @@ newico = "./biukop-letterB.ico"
 oldico = "favicon.ico"
 
 # 3cx adopted svg log for version 18 and later
+oldSvgLogo = "./3cxlogo.svg"
 newSvgLogo = "./newlogo.svg"
 
 
@@ -129,8 +130,10 @@ os.chdir(curdir)
 # Convert to base 64
 #
 b64OldLogo = base64.b64encode(loadLogo(oldlogo))
+b64OldSvgLogo =  base64.b64encode(loadLogo(oldSvgLogo))
 b64OldBackground = base64.b64encode(loadLogo(oldBackground))
 b64NewLogo = base64.b64encode(loadLogo(newlogo))
+b64NewSvgLogo = base64.b64encode(loadLogo(newSvgLogo))
 b64NewBackground = base64.b64encode(loadLogo(newBackground))
 
 # txtBg = loadLogo("bg.txt")
@@ -153,7 +156,7 @@ for root, dirs, files in os.walk(w3root):
         fileName = os.path.join(root, f)
         fileContent = open(fileName, "rb").read()
 
-        #       step3 replace 3cx text to biukop welcome,before gzip
+        #  step3 replace 3cx text to biukop welcome,before gzip
         for key in word_dict:
             if key in fileContent:
                 print key, "->", word_dict[key], " in ", fileName
@@ -169,6 +172,12 @@ for root, dirs, files in os.walk(w3root):
             print "bg  :", fileName
             fileContent = fileContent.replace(b64OldBackground, b64NewBackground)
             changed = True
+
+        if b64OldSvgLogo in fileContent:
+            print "logo :", fileName
+            fileContent = fileContent.replace(b64OldSvgLogo, b64NewSvgLogo)
+            changed = True
+
         if changed:
             with open(fileName, "wb") as f:
                 f.write(fileContent)
