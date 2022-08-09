@@ -37,7 +37,8 @@ oldico = "favicon.ico"
 # 3cx adopted svg log for version 18 and later
 oldSvgLogo = "./3cxlogo.svg"
 newSvgLogo = "./newlogo.svg"
-
+oldSvgTxt = "./3cxsvg.txt"  #  webclient svg logo
+newSvgTxt = "./newlogo.svg"
 
 #
 #
@@ -132,9 +133,12 @@ os.chdir(curdir)
 b64OldLogo = base64.b64encode(loadLogo(oldlogo))
 b64OldSvgLogo =  base64.b64encode(loadLogo(oldSvgLogo))
 b64OldBackground = base64.b64encode(loadLogo(oldBackground))
+txtOldSvg = loadLogo(oldSvgTxt)
+
 b64NewLogo = base64.b64encode(loadLogo(newlogo))
 b64NewSvgLogo = base64.b64encode(loadLogo(newSvgLogo))
 b64NewBackground = base64.b64encode(loadLogo(newBackground))
+txtNewSvg = loadLogo(newSvgLogo)
 
 # txtBg = loadLogo("bg.txt")
 # if b64OldBackground != txtBg:
@@ -176,6 +180,11 @@ for root, dirs, files in os.walk(w3root):
         if b64OldSvgLogo in fileContent:
             print "logo :", fileName
             fileContent = fileContent.replace(b64OldSvgLogo, b64NewSvgLogo)
+            changed = True
+
+        if txtOldSvg in fileContent:
+            print "logo :", fileName
+            fileContent = fileContent.replace(txtOldSvg, txtNewSvg)
             changed = True
 
         if changed:
