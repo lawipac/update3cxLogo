@@ -27,7 +27,11 @@ word_dict = {
     "Welcome to the 3CX Management Console": "Authorized user Login",
     "3CX Phone System Management Console": "Biukop Phone Console",
     "3CX Phone System Webclient": "Biukop Conference WebClient",
-    "3CX Webclient": "Biukop Webclient"
+    "3CX Webclient": "Biukop Webclient",
+    "M17.87 20.557c1.2-.1 2.3-.4 3.3-.8s1.9-1.1 2.5-1.9c.7-.8 1-1.9 1-3.3 0-2-.7-3.6-2-4.7-1.4-1.1-2.9-1.6-4.7-1.6-2.4 0-4.3.8-5.5 2.4s-1.8 3.6-1.8 6.1h-9.2c.1-2.4.5-4.7 1.3-6.7s1.9-3.7 3.3-5.2c1.4-1.4 3.1-2.6 5.1-3.3 2-.8 4.2-1.2 6.7-1.2 1.9 0 3.8.3 5.7.9s3.6 1.4 5.1 2.6c1.5 1.1 2.8 2.5 3.7 4.1 1 1.6 1.4 3.5 1.4 5.6 0 2.3-.6 4.4-1.7 6.1-1.1 1.8-2.8 3-5 3.6v.1c2.6.6 4.7 1.9 6.2 3.8s2.2 4.3 2.2 7c0 2.5-.5 4.7-1.5 6.7s-2.3 3.6-3.9 4.9c-1.6 1.3-3.5 2.3-5.6 3s-4.4 1-6.7 1c-2.7 0-5.1-.4-7.3-1.2-2.2-.8-4.1-1.9-5.6-3.4s-2.7-3.3-3.6-5.4c-.8-2.1-1.2-4.6-1.2-7.3h9.2c0 1.3.2 2.5.6 3.6.4 1.2.9 2.2 1.6 3 .7.8 1.5 1.5 2.6 2 1 .5 2.2.7 3.6.7 2.2 0 4-.7 5.5-2s2.3-3.2 2.3-5.5c0-1.8-.4-3.2-1.1-4.1-.7-1-1.6-1.6-2.7-2.1-1.1-.4-2.3-.7-3.6-.7-1.3-.1-2.5-.1-3.7-.1v-6.8c1.2.1 2.3.1 3.5.1z": " ",
+    "M63.57 6.557c5.4 0 10.7 2.2 14.6 6l1 1v-8.2l-.3-.2c-4.5-3.1-9.4-4.7-15.1-4.7-14.5 0-26.3 11.1-26.3 24.8 0 13.5 11.8 24.4 26.3 24.4 5.3 0 10.6-1.7 15.1-4.7l.3-.2v-8.1l-1 1c-4 3.8-9.3 6-14.5 6-10.5 0-19.4-8.5-19.4-18.6.1-10 8.9-18.5 19.3-18.5z": " ",
+    "M79.37 15.757v19l8.3-9.9z": " ",
+    "m129.67 49.357-19.6-23.9 19.6-23.8h-10.4l-14.3 17.5-14.3-17.5h-10.4l19.5 23.8-19.5 23.9h10.3l14.4-17.6 14.4 17.6zm1.3-2.7c0-1.5 1.2-2.7 2.7-2.7s2.7 1.2 2.7 2.7-1.2 2.7-2.7 2.7c-1.5 0-2.7-1.2-2.7-2.7zm4.9 0c0-1.3-1-2.3-2.3-2.3-1.2 0-2.3 1-2.3 2.3s1 2.3 2.3 2.3 2.3-1 2.3-2.3zm-1 1.4h-.5l-.9-1.3h-.5v1.3h-.4v-2.9h1.3c.5 0 1 .1 1 .8 0 .6-.4.8-.9.8l.9 1.3zm-1.3-1.7c.4 0 1 .1 1-.4 0-.3-.4-.4-.7-.4h-.8v.8h.5z": ""
 }
 
 # fav.ico old and new
@@ -37,8 +41,6 @@ oldico = "favicon.ico"
 # 3cx adopted svg log for version 18 and later
 oldSvgLogo = "./3cxlogo.svg"
 newSvgLogo = "./newlogo.svg"
-oldSvgTxt = "./3cxsvg.txt"  #  webclient svg logo
-newSvgTxt = "./newlogo.svg"
 
 #
 #
@@ -133,12 +135,12 @@ os.chdir(curdir)
 b64OldLogo = base64.b64encode(loadLogo(oldlogo))
 b64OldSvgLogo =  base64.b64encode(loadLogo(oldSvgLogo))
 b64OldBackground = base64.b64encode(loadLogo(oldBackground))
-txtOldSvg = loadLogo(oldSvgTxt)
+
 
 b64NewLogo = base64.b64encode(loadLogo(newlogo))
 b64NewSvgLogo = base64.b64encode(loadLogo(newSvgLogo))
 b64NewBackground = base64.b64encode(loadLogo(newBackground))
-txtNewSvg = loadLogo(newSvgLogo)
+
 
 # txtBg = loadLogo("bg.txt")
 # if b64OldBackground != txtBg:
@@ -180,11 +182,6 @@ for root, dirs, files in os.walk(w3root):
         if b64OldSvgLogo in fileContent:
             print "logo :", fileName
             fileContent = fileContent.replace(b64OldSvgLogo, b64NewSvgLogo)
-            changed = True
-
-        if txtOldSvg in fileContent:
-            print "logo :", fileName
-            fileContent = fileContent.replace(txtOldSvg, txtNewSvg)
             changed = True
 
         if changed:
